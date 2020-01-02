@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "appconf.h": "c",
+        "uart1.h": "c"
+    }
+}
