@@ -46,9 +46,9 @@ void Motor_PWM_Init(u16 arr,u16 psc)
 	TIM8->CCMR2|=6<<4;         //CH3 PWM1模式	
 	TIM8->CCMR2|=6<<12;        //CH4 PWM1模式	
 	
-	TIM8->CCMR1|=1<<3;         //CH1预装载使能	  
-	TIM8->CCMR1|=1<<11;        //CH2预装载使能	 
-	TIM8->CCMR2|=1<<3;         //CH3预装载使能	  
+	TIM8->CCMR1|=1<<3;         //CH1预装载使能
+	TIM8->CCMR1|=1<<11;        //CH2预装载使能
+	TIM8->CCMR2|=1<<3;         //CH3预装载使能
 	TIM8->CCMR2|=1<<11;        //CH4预装载使能	  
 	
 	TIM8->CCER|=1<<0;			//CH1输出使能	
@@ -58,7 +58,6 @@ void Motor_PWM_Init(u16 arr,u16 psc)
 	TIM8->BDTR |= 1<<15;		//TIM必须要这句话才能输出PWM
 	TIM8->CR1=0x8000;			//ARPE使能 
 	TIM8->CR1|=0x01;			//使能定时器
-
 
 	PWMA = 0;
 	PWMB = 0;
