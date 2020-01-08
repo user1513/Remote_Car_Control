@@ -99,31 +99,31 @@ struct _m_usmart_dev
 	struct _m_usmart_nametab *funs;	//函数名指针
 
 	void (*init)(u8);				//初始化
-	u8 (*cmd_rec)(u8*str);			//识别函数名及参数
-	void (*exe)(void); 				//执行 
-	void (*scan)(void);             //扫描
-	u8 fnum; 				  		//函数数量
-	u8 pnum;                        //参数数量
-	u8 id;							//函数id
-	u8 sptype;						//参数显示类型(非字符串参数):0,10进制;1,16进制;
-	u16 parmtype;					//参数的类型
-	u8  plentbl[MAX_PARM];  		//每个参数的长度暂存表
-	u8  parm[PARM_LEN];  			//函数的参数
+	u8 (*cmd_rec)(u8*str);	//识别函数名及参数
+	void (*exe)(void); 			//执行 
+	void (*scan)(void);     //扫描
+	u8 fnum; 				  			//函数数量
+	u8 pnum;              	//参数数量
+	u8 id;									//函数id
+	u8 sptype;							//参数显示类型(非字符串参数):0,10进制;1,16进制;
+	u16 parmtype;						//参数的类型
+	u8  plentbl[MAX_PARM];  //每个参数的长度暂存表
+	u8  parm[PARM_LEN];  		//函数的参数
 	u8 runtimeflag;					//0,不统计函数执行时间;1,统计函数执行时间,注意:此功能必须在USMART_ENTIMX_SCAN使能的时候,才有用
-	u32 runtime;					//运行时间,单位:0.1ms,最大延时时间为定时器CNT值的2倍*0.1ms
+	u32 runtime;						//运行时间,单位:0.1ms,最大延时时间为定时器CNT值的2倍*0.1ms
 };
 extern struct _m_usmart_nametab usmart_nametab[];	//在usmart_config.c里面定义
 extern struct _m_usmart_dev usmart_dev;				//在usmart_config.c里面定义
 
 
-void usmart_init(u8 sysclk);//初始化
-u8 usmart_cmd_rec(u8*str);	//识别
-void usmart_exe(void);		//执行
-void usmart_scan(void);     //扫描
-u32 read_addr(u32 addr);	//读取指定地址的值
+void usmart_init(u8 sysclk);			//初始化
+u8 usmart_cmd_rec(u8*str);				//识别
+void usmart_exe(void);						//执行
+void usmart_scan(void);     			//扫描
+u32 read_addr(u32 addr);					//读取指定地址的值
 void write_addr(u32 addr,u32 val);//在指定地址写入指定的值
-u32 usmart_get_runtime(void);	//获取运行时间
-void usmart_reset_runtime(void);//复位运行时间
+u32 usmart_get_runtime(void);			//获取运行时间
+void usmart_reset_runtime(void);	//复位运行时间
 
 #endif
 

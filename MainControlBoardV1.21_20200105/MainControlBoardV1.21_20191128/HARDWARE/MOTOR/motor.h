@@ -4,8 +4,8 @@
 
 
 //ABCD方向与实物电机贴纸有关,与原理图标号无关
-#define PWMA	TIM8->CCR1  //PC6
-#define PWMB	TIM8->CCR2	//PC7
+#define PWMB	TIM8->CCR1  //PC6
+#define PWMA	TIM8->CCR2	//PC7
 #define PWMD	TIM8->CCR3  //PC8
 #define PWMC	TIM8->CCR4	//PC9
 

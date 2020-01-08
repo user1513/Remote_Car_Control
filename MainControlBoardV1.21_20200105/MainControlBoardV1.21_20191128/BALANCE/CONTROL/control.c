@@ -6,8 +6,8 @@
 #include "ano_tc.h"                 
 
 
-uint8_t uart_data_array[40] = {0x02,0x0A};
-
+uint8_t uart_data_array[40] = {0xF1,32};
+int16_t pwmAplus,pwmBplus,pwmCplus,pwmDplus;
 //void MotorGoAngle_Func(u8 AngleVal)
 //{
 //	switch(AngleVal)
@@ -53,18 +53,53 @@ void TIM6_IRQHandler(void)
 		Motor_D=Incremental_PI_D(Encoder_D,Target_D);                         //===速度闭环控制计算电机C最终PWM
 
 		Xianfu_Pwm(6000);                        //===PWM限幅
-		//Set_Pwm(-Motor_A,-Motor_C,-Motor_D,-Motor_B);     //===赋值给PWM寄存器 
+		Set_Pwm(Motor_A,Motor_B,Motor_C,Motor_D);     //===赋值给PWM寄存器 
+		//Set_Pwm(Motor_A,-0,-0,-0);     //===赋值给PWM寄存器 
 
-		uart_data_array[2] = Target >> 8;
-		uart_data_array[3] = Target ;
+		uart_data_array[2] = Target_A >> 8;
+		uart_data_array[3] = Target_A ;
 		uart_data_array[4] = Encoder_A >> 8;
 		uart_data_array[5] = Encoder_A ;
-		uart_data_array[6] = Encoder_B >> 8;
-		uart_data_array[7] = Encoder_B ;
-		uart_data_array[8] = Encoder_C >> 8;
-		uart_data_array[9] = Encoder_C ;
-		uart_data_array[10] = Encoder_D >> 8;
-		uart_data_array[11] = Encoder_D ;
+		uart_data_array[6] = Motor_A >> 8;
+		uart_data_array[7] = Motor_A ;
+		uart_data_array[8] = pwmAplus >> 8;
+		uart_data_array[9] = pwmAplus ;
+		
+		
+		uart_data_array[10] = Target_B >> 8;
+		uart_data_array[11] = Target_B ;
+		uart_data_array[12] = Encoder_B >> 8;
+		uart_data_array[13] = Encoder_B ;
+		uart_data_array[14] = Motor_B >> 8;
+		uart_data_array[15] = Motor_B ;
+		uart_data_array[16] = pwmBplus >> 8;
+		uart_data_array[17] = pwmBplus ;
+		
+		
+		uart_data_array[18] = Target_C >> 8;
+		uart_data_array[19] = Target_C ;
+		uart_data_array[20] = Encoder_C >> 8;
+		uart_data_array[21] = Encoder_C ;
+		uart_data_array[22] = Motor_C >> 8;
+		uart_data_array[23] = Motor_C ;
+		uart_data_array[24] = pwmCplus >> 8;
+		uart_data_array[25] = pwmCplus ;
+		
+		
+		uart_data_array[26] = Target_D >> 8;
+		uart_data_array[27] = Target_D ;
+		uart_data_array[28] = Encoder_D >> 8;
+		uart_data_array[29] = Encoder_D ;
+		uart_data_array[30] = Motor_D >> 8;
+		uart_data_array[31] = Motor_D ;
+		uart_data_array[32] = pwmDplus >> 8;
+		uart_data_array[33] = pwmDplus ;
+//		uart_data_array[6] = Encoder_B >> 8;
+//		uart_data_array[7] = Encoder_B ;
+//		uart_data_array[8] = Encoder_C >> 8;
+//		uart_data_array[9] = Encoder_C ;
+//		uart_data_array[10] = Encoder_D >> 8;
+//		uart_data_array[11] = Encoder_D ;
 		vANO_TC_Send(uart_data_array);
 	}
 	
@@ -223,8 +258,9 @@ pwm+=Kp[e（k）-e(k-1)]+Ki*e(k)
 int Incremental_PI_A (int Encoder,int Target)
 { 	
 	 static int Bias,Pwm,Last_bias;
-	 Bias=Encoder-Target;                //计算偏差
-	 Pwm+=Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Bias = Target - Encoder;                //计算偏差
+	 pwmAplus = Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Pwm += pwmAplus;
 	 if(Pwm>7200)Pwm=7200;
 	 if(Pwm<-7200)Pwm=-7200;
 	 Last_bias=Bias;	                   //保存上一次偏差 
@@ -233,8 +269,9 @@ int Incremental_PI_A (int Encoder,int Target)
 int Incremental_PI_B (int Encoder,int Target)
 { 	
 	 static int Bias,Pwm,Last_bias;
-	 Bias=Encoder-Target;                //计算偏差
-	 Pwm+=Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Bias=Target-Encoder;                //计算偏差
+	 pwmBplus = Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Pwm += pwmBplus;
 	 if(Pwm>7200)Pwm=7200;
 	 if(Pwm<-7200)Pwm=-7200;
 	 Last_bias=Bias;	                   //保存上一次偏差 
@@ -243,8 +280,9 @@ int Incremental_PI_B (int Encoder,int Target)
 int Incremental_PI_C (int Encoder,int Target)
 { 	
 	 static int Bias,Pwm,Last_bias;
-	 Bias=Encoder-Target;                                  //计算偏差
-	 Pwm+=Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Bias=Target-Encoder;                                  //计算偏差
+	 pwmCplus = Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Pwm += pwmCplus;
 	 if(Pwm>7200)Pwm=7200;
 	 if(Pwm<-7200)Pwm=-7200;
 	 Last_bias=Bias;	                   //保存上一次偏差 
@@ -253,8 +291,9 @@ int Incremental_PI_C (int Encoder,int Target)
 int Incremental_PI_D (int Encoder,int Target)
 { 	
 	 static int Bias,Pwm,Last_bias;
-	 Bias=Encoder-Target;                                  //计算偏差
-	 Pwm+=Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Bias=Target - Encoder;                                  //计算偏差
+	 pwmDplus = Velocity_KP*(Bias-Last_bias)+Velocity_KI*Bias;   //增量式PI控制器
+	 Pwm += pwmDplus;
 	 if(Pwm>7200)Pwm=7200;
 	 if(Pwm<-7200)Pwm=-7200;
 	 Last_bias=Bias;	                   //保存上一次偏差 

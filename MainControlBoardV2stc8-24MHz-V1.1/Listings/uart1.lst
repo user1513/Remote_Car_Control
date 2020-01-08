@@ -1,12 +1,12 @@
-C51 COMPILER V9.60.0.0   UART1                                                             01/02/2020 14:18:48 PAGE 1   
+C51 COMPILER V9.60.0.0   UART1                                                             01/08/2020 15:17:05 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE UART1
 OBJECT MODULE PLACED IN ..\Objects\uart1.obj
 COMPILER INVOKED BY: F:\Keil_v5\C51\BIN\C51.EXE ..\HARDWARE\uart1\uart1.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\HAR
                     -DWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDW
-                    -ARE\TableTennisDevice;..\HARDWARE\ModbusCRC16) DEBUG OBJECTEXTEND PRINT(..\Listings\uart1.lst) OBJECT(..\Objects\uart1.o
-                    -bj)
+                    -ARE\TableTennisDevice;..\HARDWARE\ModbusCRC16) DEBUG OBJECTEXTEND PRINT(..\Listings\uart1.lst) TABS(2) OBJECT(..\Objects
+                    -\uart1.obj)
 
 line level    source
 
@@ -26,7 +26,7 @@ line level    source
   14   1          if (RI)
   15   1          {
   16   2              RI = 0;
-  17   2                      DR16DataAnalysis(SBUF);
+  17   2          DR16DataAnalysis(SBUF);
   18   2          }
   19   1      }
   20          
@@ -38,14 +38,14 @@ line level    source
   26   1          TH1 = BRT >> 8;
   27   1          TR1 = 1;
   28   1          AUXR |= 0x40;
-  29   1              ES=1;
-  30   1              EA=1;
+  29   1        ES=1;
+  30   1        EA=1;
   31   1      }
   32          
   33          void Uart1Send(uint8_t dat)
   34          {
   35   1          SBUF = dat;
-  36   1              while (!TI);
+  36   1        while (!TI);
   37   1          TI=0;
   38   1          
   39   1      }
@@ -62,7 +62,7 @@ line level    source
   50          {
   51   1          while (length--)
   52   1          {
-C51 COMPILER V9.60.0.0   UART1                                                             01/02/2020 14:18:48 PAGE 2   
+C51 COMPILER V9.60.0.0   UART1                                                             01/08/2020 15:17:05 PAGE 2   
 
   53   2              Uart1Send(*p++);
   54   2          }

@@ -73,7 +73,7 @@ void Uart_ANO_TC__Init(void)
 	
 		#if config_ANO_TC_UART_SEND_NVIC
 		NVIC_InitType.NVIC_IRQChannel = _ANO_TC_UART_SEND_DMAx_Channelx_IRQn;//DMA串口发送中断线
-		NVIC_InitType.NVIC_IRQChannelPreemptionPriority = 2;
+		NVIC_InitType.NVIC_IRQChannelPreemptionPriority = 1;
 		NVIC_InitType.NVIC_IRQChannelSubPriority = 2;
 		NVIC_InitType.NVIC_IRQChannelCmd = ENABLE;
 		NVIC_Init(&NVIC_InitType);

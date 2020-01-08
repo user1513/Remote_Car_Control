@@ -11,7 +11,7 @@ int Encoder_A,Encoder_B,Encoder_C,Encoder_D;          //编码器的脉冲计数
 
 long int Position_A,Position_B,Position_C,Position_D,Rate_A,Rate_B,Rate_C,Rate_D; //PID控制相关变量
 
-float Velocity_KP=0.5,Velocity_KI=0.5;	          		//速度控制PID参数
+float Velocity_KP=1,Velocity_KI=0.5;	          		//速度控制PID参数
 float Position_KP=80,Position_KI=0,Position_KD=20;	//位置控制PID参数
 
 

@@ -22,7 +22,7 @@ USART_DMACmd(USART1, USART_DMAReq_Tx|USART_DMAReq_Rx,  ENABLE);
 
 
 #define config_USE_ANO_TC_RECEIVE_SIZE 30	//配置匿名上位机串口接收总大小
-#define config_USE_ANO_TC_SEND_SIZE 30		//配置匿名上位机串口发送总大小
+#define config_USE_ANO_TC_SEND_SIZE 60		//配置匿名上位机串口发送总大小
 
 #define config_ANO_TC_SOURCE_ADDER 			0X05		//本地源地址
 #define config_ANO_TC_DESTINATION_ADDER 	0XAF		//目的地地址

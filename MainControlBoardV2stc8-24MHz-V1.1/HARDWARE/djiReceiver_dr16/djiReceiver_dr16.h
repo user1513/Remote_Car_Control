@@ -31,7 +31,7 @@ float fGetAngle(uint16_t uChannel_x,uint16_t uChannel_y,float * const lastval,fl
 #define config_RECEIVE_FLAG ES
 #define config_RECEIVE_ENBALE_FLAG config_RECEIVE_FLAG = 1
 #define config_RECEIVE_DISABLE_FLAG config_RECEIVE_FLAG = 0
-#define config_ACTION_START_MINVAL 200 //当设置遥感移动最小的幅度,小于设定值时小车模式处于stop
+#define config_ACTION_START_MINVAL 50 //当设置遥感移动最小的幅度,小于设定值时小车模式处于stop
 
 #endif
 #endif

@@ -61,30 +61,6 @@ int main(void)
 	
 	Motor_PWM_Init(7199,0);   		//=====初始化PWM 10KHZ，用于驱动电机
 	Car_DIR_Stop();
-	
-			 PWMA = 200 * 10;
-			 PWMB = 200 * 10;	
-			 PWMD =	200 * 10;
-			 PWMC =	200 * 10;
-MotorAForword();		
-MotorABackword();			
-MotorAStop();			
-
-MotorBForword();	
-MotorBBackword();		
-MotorBStop();			
-
-MotorCForword();		
-MotorCBackword();			
-MotorCStop();		
-
-MotorDForword();		
-MotorDBackword();	
-MotorDStop();		
-			 PWMA = 0;
-			 PWMB = 0;	
-			 PWMD =	0;
-			 PWMC =	0;
 	uart4_init(100000);
 	uart_init(115200);
 	Uart_ANO_TC__Init();
@@ -146,7 +122,7 @@ void vCar_Set_PID(uint8_t uiAtion_Mode, uint16_t _Target)
 {
 	switch(uiAtion_Mode)
 	{
-		case Car_STOP: 			Car_DIR_Stop();Target_A = 0; Target_B = 0; Target_C = 0 ;Target_D = 0;break;
+		case Car_STOP: 				Target_A = 0; Target_B = 0; Target_C = 0 ;Target_D = 0;break;
 		case Car_Angle_0:  		Target_A = _Target; Target_B = - _Target; Target_C = _Target; Target_D = - _Target; break;
 		case Car_Angle_45:  	Target_A = _Target; Target_B = 0; Target_C = _Target; Target_D = 0; break;
 		case Car_Angle_90:  	Target_A = _Target; Target_B = _Target; Target_C = _Target; Target_D = _Target; break;

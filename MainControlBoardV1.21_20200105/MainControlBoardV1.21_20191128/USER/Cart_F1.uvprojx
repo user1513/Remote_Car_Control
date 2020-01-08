@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>BEEP</TargetName>
+      <TargetName>Car_Action</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -324,7 +324,7 @@
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\STM32F10x_FWLib\inc;..\CORE;..\APP;..\HARDWARE\LED;..\HARDWARE\MOTOR;..\HARDWARE\EXTI;..\HARDWARE\ENCODER;..\HARDWARE\TIMER;..\BALANCE\CONTROL;..\HARDWARE\UART4;..\HARDWARE\USART2;..\HARDWARE\USART3;..\HARDWARE\DMA;..\HARDWARE\ModbusCRC16;..\HARDWARE\DMA_ANO_TC</IncludePath>
+              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\STM32F10x_FWLib\inc;..\CORE;..\APP;..\HARDWARE\LED;..\HARDWARE\MOTOR;..\HARDWARE\EXTI;..\HARDWARE\ENCODER;..\HARDWARE\TIMER;..\BALANCE\CONTROL;..\HARDWARE\UART4;..\HARDWARE\USART2;..\HARDWARE\USART3;..\HARDWARE\DMA;..\HARDWARE\ModbusCRC16;..\HARDWARE\DMA_ANO_TC;..\USMART</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -455,6 +455,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>BALANCE</GroupName>
+          <Files>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BALANCE\CONTROL\control.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>SYSTEM</GroupName>
           <Files>
             <File>
@@ -531,16 +541,6 @@
               <FileName>app_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\app_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>BALANCE</GroupName>
-          <Files>
-            <File>
-              <FileName>control.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BALANCE\CONTROL\control.c</FilePath>
             </File>
           </Files>
         </Group>
