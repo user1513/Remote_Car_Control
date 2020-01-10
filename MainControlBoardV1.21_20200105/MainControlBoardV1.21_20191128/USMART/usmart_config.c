@@ -26,8 +26,8 @@ struct _m_usmart_nametab usmart_nametab[]=
 //	(void*)LCD_Draw_Circle,"void Draw_Circle(u16 x0,u16 y0,u8 r)",
 //	(void*)LCD_ShowNum,"void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size)",
 //	(void*)LCD_ShowString,"void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)",
-	(void*)led_set,"void led_set(u8 sta)",
-	(void*)test_fun,"void test_fun(void(*ledset)(u8),u8 sta)",				  	    
+//	(void*)led_set,"void led_set(u8 sta)",
+//	(void*)test_fun,"void test_fun(void(*ledset)(u8),u8 sta)",				  	    
 //	(void*)LCD_ReadPoint,"u16 LCD_ReadPoint(u16 x,u16 y)",
 };						  
 ///////////////////////////////////END///////////////////////////////////////////////

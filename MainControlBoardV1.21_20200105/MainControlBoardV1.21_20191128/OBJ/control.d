@@ -21,3 +21,5 @@
 ..\obj\control.o: ..\HARDWARE\MOTOR\motor.h
 ..\obj\control.o: ..\HARDWARE\LED\led.h
 ..\obj\control.o: ..\HARDWARE\DMA_ANO_TC\ano_tc.h
+..\obj\control.o: ..\SYSTEM\usart\usart.h
+..\obj\control.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

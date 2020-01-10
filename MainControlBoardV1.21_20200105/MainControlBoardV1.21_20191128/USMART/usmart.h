@@ -101,7 +101,7 @@ struct _m_usmart_dev
 	void (*init)(u8);				//初始化
 	u8 (*cmd_rec)(u8*str);	//识别函数名及参数
 	void (*exe)(void); 			//执行 
-	void (*scan)(void);     //扫描
+	void (*scan)(void);     //2
 	u8 fnum; 				  			//函数数量
 	u8 pnum;              	//参数数量
 	u8 id;									//函数id

@@ -4,28 +4,23 @@
 #include "motor.h"
 #include "led.h"
 #include "ano_tc.h"                 
+#include "usart.h"	
 
-
-uint8_t uart_data_array[40] = {0xF1,32};
+uint8_t uart_data_array[40] = {0xAA,0X05,0XAF,0xF1,32};
 int16_t pwmAplus,pwmBplus,pwmCplus,pwmDplus;
-//void MotorGoAngle_Func(u8 AngleVal)
-//{
-//	switch(AngleVal)
-//	{
-//		case Angle_0:   Target_C=10000;  Target_D=-10000;Target_B=-10000;Target_A=10000;break;
-//		case Angle_45:  Target_C=10000;   Target_D=0;Target_B=0;Target_A=10000;break;
-//		case Angle_90:  Target_C=10000;  Target_D=10000;Target_B=10000;Target_A=10000;break;
-//		case Angle_135: Clear_Position();Target_C=0;  Target_D=10000;Target_B=10000;Target_A=0;break;
-//		case Angle_180: Clear_Position();Target_C=-10000; Target_D=10000;Target_B=10000;Target_A=-10000;break;
-//		case Angle_225: Clear_Position();Target_C=-10000;      Target_D=0;Target_B=0;Target_A=-10000;break;
-//		case Angle_270: Clear_Position();Target_C=-10000; Target_D=-10000;Target_B=-10000;Target_A=-10000;break;
-//		case Angle_315: Clear_Position();Target_C=0; Target_D=-10000;Target_B=-10000;Target_A=0;break;
-//		case AngleL_360:Clear_Position();Target_C=-10000;  Target_D=10000;Target_B=-10000;Target_A=10000;break;
-//		case AngleR_360:Clear_Position();Target_C=10000; Target_D=-10000;Target_B=10000;Target_A=-10000;break;
-//		default:Target_A=0;Target_C=0;Target_D=0;Target_B=0;Clear_Position();break;
-//	}
-//}
+extern uint8_t ucReceiveGlobal[];
 
+
+uint8_t utAdd8_Check(uint8_t *putData, uint8_t utLength)//add8校验
+{
+	uint8_t utSum = 0;
+	while(utLength--)
+	{
+		utSum += *putData;
+		putData ++;
+	}
+	return utSum;
+}
 /**************************************************************************
 函数功能：所有的控制代码都在这里面
          5ms定时中断由MPU6050的INT引脚触发
@@ -37,6 +32,7 @@ void TIM6_IRQHandler(void)
 {    
 	if(TIM6->SR&0X0001)//溢出中断
 	{     
+		uint8_t ucIsUsePid = ucReceiveGlobal[4] & 0x03;
 		TIM6->SR&=~(1<<0);//清除中断标志位 	    
 		Encoder_A= -Read_Encoder(1);                                          		//===读取编码器的值
 		Position_A+=Encoder_A;                                                	 //===积分得到速度   
@@ -53,55 +49,57 @@ void TIM6_IRQHandler(void)
 		Motor_D=Incremental_PI_D(Encoder_D,Target_D);                         //===速度闭环控制计算电机C最终PWM
 
 		Xianfu_Pwm(6000);                        //===PWM限幅
-		Set_Pwm(Motor_A,Motor_B,Motor_C,Motor_D);     //===赋值给PWM寄存器 
-		//Set_Pwm(Motor_A,-0,-0,-0);     //===赋值给PWM寄存器 
-
-		uart_data_array[2] = Target_A >> 8;
-		uart_data_array[3] = Target_A ;
-		uart_data_array[4] = Encoder_A >> 8;
-		uart_data_array[5] = Encoder_A ;
-		uart_data_array[6] = Motor_A >> 8;
-		uart_data_array[7] = Motor_A ;
-		uart_data_array[8] = pwmAplus >> 8;
-		uart_data_array[9] = pwmAplus ;
+		if(ucIsUsePid != 1)
+			Set_Pwm(Motor_A,Motor_B,Motor_C,Motor_D);     //===赋值给PWM寄存器 
+		//Set_Pwm(Motor_A,-0,-0,-0);     //===赋值给PWM寄存器 	
+		uart_data_array[2+3] = Target_A >> 8;
+		uart_data_array[3+3] = Target_A ;
+		uart_data_array[4+3] = Encoder_A >> 8;
+		uart_data_array[5+3] = Encoder_A ;
+		uart_data_array[6+3] = Motor_A >> 8;
+		uart_data_array[7+3] = Motor_A ;
+		uart_data_array[8+3] = pwmAplus >> 8;
+		uart_data_array[9+3] = pwmAplus ;
 		
 		
-		uart_data_array[10] = Target_B >> 8;
-		uart_data_array[11] = Target_B ;
-		uart_data_array[12] = Encoder_B >> 8;
-		uart_data_array[13] = Encoder_B ;
-		uart_data_array[14] = Motor_B >> 8;
-		uart_data_array[15] = Motor_B ;
-		uart_data_array[16] = pwmBplus >> 8;
-		uart_data_array[17] = pwmBplus ;
+		uart_data_array[10+3] = Target_B >> 8;
+		uart_data_array[11+3] = Target_B ;
+		uart_data_array[12+3] = Encoder_B >> 8;
+		uart_data_array[13+3] = Encoder_B ;
+		uart_data_array[14+3] = Motor_B >> 8;
+		uart_data_array[15+3] = Motor_B ;
+		uart_data_array[16+3] = pwmBplus >> 8;
+		uart_data_array[17+3] = pwmBplus ;
 		
 		
-		uart_data_array[18] = Target_C >> 8;
-		uart_data_array[19] = Target_C ;
-		uart_data_array[20] = Encoder_C >> 8;
-		uart_data_array[21] = Encoder_C ;
-		uart_data_array[22] = Motor_C >> 8;
-		uart_data_array[23] = Motor_C ;
-		uart_data_array[24] = pwmCplus >> 8;
-		uart_data_array[25] = pwmCplus ;
+		uart_data_array[18+3] = Target_C >> 8;
+		uart_data_array[19+3] = Target_C ;
+		uart_data_array[20+3] = Encoder_C >> 8;
+		uart_data_array[21+3] = Encoder_C ;
+		uart_data_array[22+3] = Motor_C >> 8;
+		uart_data_array[23+3] = Motor_C ;
+		uart_data_array[24+3] = pwmCplus >> 8;
+		uart_data_array[25+3] = pwmCplus ;
 		
 		
-		uart_data_array[26] = Target_D >> 8;
-		uart_data_array[27] = Target_D ;
-		uart_data_array[28] = Encoder_D >> 8;
-		uart_data_array[29] = Encoder_D ;
-		uart_data_array[30] = Motor_D >> 8;
-		uart_data_array[31] = Motor_D ;
-		uart_data_array[32] = pwmDplus >> 8;
-		uart_data_array[33] = pwmDplus ;
+		uart_data_array[26+3] = Target_D >> 8;
+		uart_data_array[27+3] = Target_D ;
+		uart_data_array[28+3] = Encoder_D >> 8;
+		uart_data_array[29+3] = Encoder_D ;
+		uart_data_array[30+3] = Motor_D >> 8;
+		uart_data_array[31+3] = Motor_D ;
+		uart_data_array[32+3] = pwmDplus >> 8;
+		uart_data_array[33+3] = pwmDplus ;
+		uart_data_array[34+3] = utAdd8_Check(uart_data_array,36);
+		Uart1_String_Send_Length(uart_data_array,38);
+	}
 //		uart_data_array[6] = Encoder_B >> 8;
 //		uart_data_array[7] = Encoder_B ;
 //		uart_data_array[8] = Encoder_C >> 8;
 //		uart_data_array[9] = Encoder_C ;
 //		uart_data_array[10] = Encoder_D >> 8;
 //		uart_data_array[11] = Encoder_D ;
-		vANO_TC_Send(uart_data_array);
-	}
+//		vANO_TC_Send(uart_data_array);
 	
 	if(--led_delayCount == 0)
 	{

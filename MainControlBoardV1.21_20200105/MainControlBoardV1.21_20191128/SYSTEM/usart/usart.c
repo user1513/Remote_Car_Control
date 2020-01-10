@@ -45,7 +45,7 @@ struct __FILE
 
 FILE __stdout;       
 //定义_sys_exit()以避免使用半主机模式    
-int _sys_exit(int x) 
+void _sys_exit(int x) 
 { 
 	x = x; 
 } 
@@ -90,7 +90,7 @@ void uart_init(u32 bound){
   //GPIO端口设置
   GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
-//	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 	 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);	//使能USART1，GPIOA时钟
   
@@ -106,11 +106,11 @@ void uart_init(u32 bound){
   GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA.10  
 
   //Usart1 NVIC 配置
-//  NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级3
-//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		//子优先级3
-//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
-//	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
+  NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
   
    //USART 初始化设置
 
@@ -122,10 +122,37 @@ void uart_init(u32 bound){
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;	//收发模式
 
     USART_Init(USART1, &USART_InitStructure); //初始化串口1
-//  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);//开启串口接受中断
-	USART_DMACmd(USART1, USART_DMAReq_Tx|USART_DMAReq_Rx,  ENABLE);	
+  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);//开启串口接受中断
+//	USART_DMACmd(USART1, USART_DMAReq_Tx|USART_DMAReq_Rx,  ENABLE);	
     USART_Cmd(USART1, ENABLE);                    //使能串口1 
 
+}
+
+
+void Uart1_Send_Byte(u8 data)
+{
+	USART1->SR;
+	USART1->DR=data;
+	while((USART1->SR&0x40)==0);
+	USART1->SR &=~0X40;
+}
+
+void Uart1_String_Send(u8 *data)
+{
+    while(*data!='\0')
+	{
+		Uart1_Send_Byte(*data);
+		data++;
+	}
+}
+
+void Uart1_String_Send_Length(u8 *data,u8 length)
+{
+    while(length--)
+	{
+		Uart1_Send_Byte(*data);
+		data++;
+	}
 }
 
 void USART1_IRQHandler(void)                	//串口1中断服务程序

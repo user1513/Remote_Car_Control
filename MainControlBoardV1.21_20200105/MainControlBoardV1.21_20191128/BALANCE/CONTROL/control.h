@@ -26,6 +26,4 @@ int Position_PID_C (int Encoder,int Target);
 int Position_PID_D (int Encoder,int Target);
 void Get_RC(u8 mode);
 void Count_Velocity(void);
-//void CAN_N_Usart_Control(void);
-//void MotorGoAngle_Func(u8 AngleVal);
 #endif

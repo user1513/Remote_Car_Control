@@ -27,3 +27,5 @@
 ..\obj\main.o: ..\HARDWARE\DMA\dma.h
 ..\obj\main.o: ..\HARDWARE\ModbusCRC16\ModbusCRC16.h
 ..\obj\main.o: ..\HARDWARE\DMA_ANO_TC\ano_tc.h
+..\obj\main.o: ..\USMART\usmart.h
+..\obj\main.o: ..\USMART\usmart_str.h

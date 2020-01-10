@@ -1,0 +1,4 @@
+---- usmart_scan Matches (3 in 3 files) ----
+usmart.c (USMART) line 392 : void usmart_scan(void)
+usmart.h (USMART) line 122 : void usmart_scan(void);     			//扫描
+usmart_config.c (USMART) line 44 : 	usmart_scan,

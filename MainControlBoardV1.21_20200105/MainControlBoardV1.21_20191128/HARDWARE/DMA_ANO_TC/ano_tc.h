@@ -12,7 +12,7 @@ USART_DMACmd(USART1, USART_DMAReq_Tx|USART_DMAReq_Rx,  ENABLE);
 	Uart_Dma_Init();
 */
 /////////////////////////////////////////////////////////////////////////
-#define config_USE_ANO_TC_ENABLE  1  		//配置DMA模式使能
+#define config_USE_ANO_TC_ENABLE  0  		//配置DMA模式使能
 
 #define config_USE_ANO_TC_UART_RECEIVE 1	//配置匿名上位机串口接收模式使能
 #define config_USE_ANO_TC_UART_SEND 1		//配置匿名上位机串口发送模式使能
